@@ -9,6 +9,8 @@ services:
       MYSQL_DATABASE: task_manager
     ports:
       - "3306:3306"
+    networks:
+      - app_network
     volumes:
       - db_data:/var/lib/mysql
 
@@ -22,6 +24,8 @@ services:
       - "5000:5000"
     depends_on:
       - db
+    networks:
+      - app_network
     volumes:
       - .:/app
     links:
@@ -29,3 +33,7 @@ services:
 
 volumes:
   db_data:
+  
+networks:
+  app_network:
+    driver: bridge
