@@ -1,16 +1,10 @@
 from flask import Flask
-from .config import Config
-from flask_sqlalchemy import SQLAlchemy
+from app.database import init_db
 
-db = SQLAlchemy()
+app = Flask(__name__)
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
-    db.init_app(app)
+# Initialize database on startup
+init_db()
 
-    from . import routes
-    app.register_blueprint(routes.bp)
-
-    return app
+from app import routes  # Import routes after app initialization
 
